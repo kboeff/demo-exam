@@ -2,24 +2,30 @@ const Band = require('../models/Band');
 
 module.exports = {
   getIndex: function (req, res) {
-    // TODO:
+    Band.find()
+      .then(band => res.render('index', { bands: band }));
   },
   getCreate: function (req, res) {
-    // TODO:
+    res.render('create');
   },
   postCreate: function (req, res) {
-    // TODO:
+    Band.create(req.body)
+      .then(() => res.redirect('/'));
   },
   getEdit: function (req, res) {
-    // TODO:
+    Band.findById(req.params.id)
+      .then(bands => res.render('edit', { band: bands } ))
   },
   postEdit: function (req, res) {
-   // TODO:
+    Band.findByIdAndUpdate(req.params.id, { bands: req.body })
+      .then(() => res.redirect('/'));
   },
   getDelete: function (req, res) {
-    // TODO:
+    Band.findById(req.params.id)
+      .then(band => res.render('delete', { band }));
   },
   postDelete: function (req, res) {
-    // TODO:
+    Band.findByIdAndDelete(req.params.id, req.body)
+      .then(() => res.redirect('/'));
   }
 };
